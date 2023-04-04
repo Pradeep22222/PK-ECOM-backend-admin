@@ -4,9 +4,16 @@ import helmet from "helmet";
 import express from "express";
 const app = express();
 const PORT = 8000;
+// db connection
+import { dbConnection } from "./src/config/dbConfig.js";
+dbConnection();
 // middlewares
 app.use(cors());
 app.use(helmet());
+app.use(express.json());
+// apis
+import adminUserRouter from "./src/routers/adminUserRouter.js";
+app.use("/api/v1/admin-user", adminUserRouter);
 app.use("/", (req, res) => {
   res.json({
     message: "are you lost darling",
@@ -25,4 +32,3 @@ app.listen(PORT, (error) => {
     ? console.log(error)
     : console.log(`server running on http://localhost:${PORT}`);
 });
- 

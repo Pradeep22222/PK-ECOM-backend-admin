@@ -3,3 +3,15 @@ GET http://localhost:8000
 
 #======== Admin API
 ###post new admin user
+POST http://localhost:8000/api/v1/admin-user
+Content-Type: application/json
+
+{
+    "firstName":"Pradeep",
+    "lastName":"Dhital",
+    "email":"pradedep@fjd.com",
+    "phone":"523442323",
+    "dob":"03/09/2022",
+    "address":"fdf 12 dfdf",
+    "password":"dfsdffdsfs"
+}
