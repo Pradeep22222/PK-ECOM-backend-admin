@@ -1,6 +1,7 @@
 import express from "express";
 import { insertAdminUser } from "../models/adminUserModel/AdminUserModel.js";
 import { hashPassword } from "../helpers/bcryptHelper.js";
+import { newAdminUserValidation } from "../middlewares/joivalidation/adminUserValidation.js";
 const router = express.Router();
 // server side validation
 
@@ -11,7 +12,7 @@ const router = express.Router();
 // create unique verification code
 
 // send create a link pointing to our frontend with the email and verification code and send to their email
-router.post("/", async (req, res, next) => {
+router.post("/", newAdminUserValidation, async (req, res, next) => {
   try {
     const { password } = req.body;
      req.body.password = hashPassword(password);

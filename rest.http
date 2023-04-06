@@ -12,6 +12,6 @@ Content-Type: application/json
     "email":"pradedep@fjd.com",
     "phone":"523442323",
     "dob":"03/09/2022",
-    "address":"fdf 12 dfdf",
+    "address":"",
     "password":"dfsdffdsfs"
 }
