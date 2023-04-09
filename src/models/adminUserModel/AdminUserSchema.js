@@ -40,6 +40,10 @@ const adminUserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    emailValidationCode: {
+      type: String,
+      default:"",
+    }
   },
   { timestamps: true }
 );

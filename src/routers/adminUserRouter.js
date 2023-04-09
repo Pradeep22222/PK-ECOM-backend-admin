@@ -1,40 +1,46 @@
 import express from "express";
+import { v4 as uuidv4 } from "uuid";
 import { insertAdminUser } from "../models/adminUserModel/AdminUserModel.js";
 import { hashPassword } from "../helpers/bcryptHelper.js";
 import { newAdminUserValidation } from "../middlewares/joivalidation/adminUserValidation.js";
+import { verificationEmail } from "../helpers/emailHelper.js";
 const router = express.Router();
-// server side validation
 
-// encrypt user password
-
-// insert into the db
-
-// create unique verification code
-
-// send create a link pointing to our frontend with the email and verification code and send to their email
 router.post("/", newAdminUserValidation, async (req, res, next) => {
   try {
     const { password } = req.body;
-     req.body.password = hashPassword(password);
+    req.body.password = hashPassword(password);
+    req.body.emailValidationCode = uuidv4();
 
     const user = await insertAdminUser(req.body);
-    user?._id
-      ? res.json({
-          status: "success",
-          message:
-            "We have sent you an email to verify your account, please check your mail box including junk folder",
-        })
-      : res.json({
-          status: "error",
-          message: "Unable to create new admin user, try again later",
-        });
+    if (user?._id) {
+      res.json({
+        status: "success",
+        message:
+          "We have sent you an email to verify your account, please check your mail box including junk folder",
+      });
+      const url = `${process.env.ROOT_DOMAIN}/admin/verify-email?c=${user.emailValidationCode}&e=${user.email}`;
+      // send email
+      verificationEmail({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email:user.email,
+        url,
+      });
+      return;
+    } else {
+      res.json({
+        status: "error",
+        message: "Unable to create new admin user, try again later",
+      });
+    }
   } catch (error) {
     if (error.message.includes("E11000 duplicate key error collection")) {
       error.status = 200;
-      error.message = "There is already another user registered with the email you provided"
-      
+      error.message =
+        "There is already another user registered with the email you provided";
     }
-      next(error);
+    next(error);
   }
 });
 router.patch("/verify-email", (req, res, next) => {
