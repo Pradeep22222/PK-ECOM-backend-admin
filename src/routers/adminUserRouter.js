@@ -1,8 +1,14 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
-import { insertAdminUser } from "../models/adminUserModel/AdminUserModel.js";
+import {
+  insertAdminUser,
+  updateOneAdminUser,
+} from "../models/adminUserModel/AdminUserModel.js";
 import { hashPassword } from "../helpers/bcryptHelper.js";
-import { newAdminUserValidation } from "../middlewares/joivalidation/adminUserValidation.js";
+import {
+  emailVerificationValidation,
+  newAdminUserValidation,
+} from "../middlewares/joivalidation/adminUserValidation.js";
 import { verificationEmail } from "../helpers/emailHelper.js";
 const router = express.Router();
 
@@ -24,7 +30,7 @@ router.post("/", newAdminUserValidation, async (req, res, next) => {
       verificationEmail({
         firstName: user.firstName,
         lastName: user.lastName,
-        email:user.email,
+        email: user.email,
         url,
       });
       return;
@@ -43,16 +49,36 @@ router.post("/", newAdminUserValidation, async (req, res, next) => {
     next(error);
   }
 });
-router.patch("/verify-email", (req, res, next) => {
-  try {
-    console.log(req.body);
-    res.json({
-      status: "success",
-      message: "verify email to create new user",
-    });
-  } catch (error) {
-    next(error);
+router.patch(
+  "/verify-email",
+  emailVerificationValidation,
+  async (req, res, next) => {
+    try {
+      console.log(req.body);
+      const { email, emailValidationCode } = req.body;
+      const user = await updateOneAdminUser(
+        {
+          emailValidationCode,
+          email,
+        },
+        {
+          status: "active",
+          emailValidationCode: "",
+        }
+      );
+      user?._id
+        ? res.json({
+            status: "success",
+            message: "Your account has been verified, you may login now",
+          })
+        : res.json({
+            status: "error",
+            message: "Invalid or expired link, no action was taken",
+          });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 export default router;
