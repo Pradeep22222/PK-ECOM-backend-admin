@@ -41,3 +41,20 @@ export const emailVerificationValidation = (req, res, next) => {
     next(error)
   }
 }
+
+export const loginValidation = (req, res, next) => {
+  try {
+    const schema = Joi.object({
+      email: Joi.string().email({ minDomainSegments: 2 }).required(),
+      password: Joi.string().max(100).required(),
+    });
+    const { error } = schema.validate(req.body);
+    if (error) {
+      error.status = 200;
+      return next(error);
+    }
+    next();
+  } catch (error) {
+    next(error);
+  }
+};

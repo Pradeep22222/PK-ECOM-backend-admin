@@ -1,15 +1,20 @@
 import express from "express";
 import { v4 as uuidv4 } from "uuid";
 import {
+  findOneAdminUser,
   insertAdminUser,
   updateOneAdminUser,
 } from "../models/adminUserModel/AdminUserModel.js";
-import { hashPassword } from "../helpers/bcryptHelper.js";
+import { comparePassword, hashPassword } from "../helpers/bcryptHelper.js";
 import {
   emailVerificationValidation,
+  loginValidation,
   newAdminUserValidation,
 } from "../middlewares/joivalidation/adminUserValidation.js";
-import { userVerifiedNotification, verificationEmail } from "../helpers/emailHelper.js";
+import {
+  userVerifiedNotification,
+  verificationEmail,
+} from "../helpers/emailHelper.js";
 const router = express.Router();
 
 router.post("/", newAdminUserValidation, async (req, res, next) => {
@@ -80,5 +85,39 @@ router.patch(
     }
   }
 );
+
+router.post("/login", loginValidation, async (req, res, next) => {
+  try {
+    const { password, email } = req.body;
+    // find if admin user on the basis of given email
+    const user = await findOneAdminUser({ email });
+    // if we pass the registered email, we will get a user responded back
+    if (user?._id) {
+          if (user.status !== "active") {
+            return res.json({
+              status: "error",
+              message:
+                "Your account has not been verified, please check your email and verify your account",
+            });
+          }
+      // We need to verify if the password sent by the user and the hashed password stored in our db is the same.
+      const isMatched = comparePassword(password, user.password);
+      if (isMatched) {
+        user.password = undefined;
+        return res.json({
+          status: "success",
+          message: "logged in successfully",
+          user,
+        });
+      }
+    }
+    res.json({
+      status: "error",
+      message:"invalid login credentials"
+    })
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
