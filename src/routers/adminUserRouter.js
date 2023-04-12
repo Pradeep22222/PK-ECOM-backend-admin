@@ -9,7 +9,7 @@ import {
   emailVerificationValidation,
   newAdminUserValidation,
 } from "../middlewares/joivalidation/adminUserValidation.js";
-import { verificationEmail } from "../helpers/emailHelper.js";
+import { userVerifiedNotification, verificationEmail } from "../helpers/emailHelper.js";
 const router = express.Router();
 
 router.post("/", newAdminUserValidation, async (req, res, next) => {
@@ -70,7 +70,7 @@ router.patch(
         ? res.json({
             status: "success",
             message: "Your account has been verified, you may login now",
-          })
+          }) && userVerifiedNotification(user)
         : res.json({
             status: "error",
             message: "Invalid or expired link, no action was taken",
