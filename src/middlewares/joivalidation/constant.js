@@ -1,0 +1,10 @@
+import Joi from "joi";
+export const FNAME = Joi.string().max(20);
+export const LNAME = Joi.string().max(20);
+export const EMAIL = Joi.string().email({ minDomainSegments: 2 });
+export const PHONE = Joi.string().max(100);
+export const DATE = Joi.date().allow("", null);
+export const ADDRESS = Joi.string().max(100).allow("", null);
+export const PASSWORD = Joi.string().max(100);
+export const SHORTSTR = Joi.string().max(100);
+export const LONGSTR = Joi.string().max(5000);
