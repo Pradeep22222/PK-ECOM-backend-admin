@@ -1,0 +1,9 @@
+1. send the login info to the login api
+2. if login success, create JWTs,
+  a. accessJWT, store in the session table
+  b. refreshJWT, store in the user table
+
+3. return tokens to the frontend
+4. store token in the browser storage.
+  a. AccessJWT goes to the sessionStorage.
+  b.refresh JWT goes in the localStorage.

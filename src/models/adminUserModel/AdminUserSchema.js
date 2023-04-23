@@ -21,7 +21,7 @@ const adminUserSchema = new mongoose.Schema(
       unique: true,
       index: 1,
       required: true,
-      maxLength: [50, "User last name can't be longer than 20 character"],
+      maxLength: [50, "User email address can't be longer than 50 character"],
     },
     phone: {
       type: String,
@@ -42,8 +42,12 @@ const adminUserSchema = new mongoose.Schema(
     },
     emailValidationCode: {
       type: String,
-      default:"",
-    }
+      default: "",
+    },
+    refreshJWT: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

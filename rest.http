@@ -9,11 +9,11 @@ Content-Type: application/json
 {
     "firstName":"Pradeep",
     "lastName":"Dhital",
-    "email":"pradeep4@gmail.com",
+    "email":"pradeep@gmail.com",
     "phone":"523442323",
     "dob":"03/09/2022",
     "address":"",
-    "password":"dfsdffdsfs"
+    "password":"pradeep"
 }
 
 ###login
@@ -21,6 +21,6 @@ POST http://localhost:8000/api/v1/admin-user/login
 Content-Type: application/json
 
 { 
-    "email":"pradeepdhital01@gmail.com",
-    "password":"jjjj"
+    "email":"pradeep@gmail.com",
+    "password":"pradeep"
 }

@@ -53,7 +53,6 @@ export const userVerifiedNotification = (emailData) => {
     <br/>
     <br/>
     <p> Your account has been verified, you may <a href="${process.env.ROOT_DOMAIN}">login</a> now.</p>
-    
     <br/>
     <br/>
     <br/>
