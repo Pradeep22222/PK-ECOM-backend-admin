@@ -24,3 +24,10 @@ Content-Type: application/json
     "email":"pradeep@gmail.com",
     "password":"pradeep"
 }
+#####============= categories action
+
+### post category
+POST http://localhost:8000/api/v1/categories
+{
+"status":"s"
+}

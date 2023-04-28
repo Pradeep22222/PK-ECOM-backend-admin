@@ -1,8 +1,15 @@
 import express from "express";
 const router = express.Router();
-router.get("/", (req, res, next) => {
+// post new category
+router.post("/", (req, res, next) => {
   try {
-  } catch (error) {}
+    res.json({
+      status: "success",
+      message: "category added",
+    });
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default router;

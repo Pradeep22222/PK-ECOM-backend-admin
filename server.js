@@ -14,6 +14,10 @@ app.use(express.json());
 // apis
 import adminUserRouter from "./src/routers/adminUserRouter.js";
 app.use("/api/v1/admin-user", adminUserRouter);
+import categoriesRouter from "./src/routers/categoriesRouter.js";
+
+app.use("/api/v1/categories", categoriesRouter);
+
 app.use("/", (req, res) => {
   res.json({
     message: "are you lost darling",
