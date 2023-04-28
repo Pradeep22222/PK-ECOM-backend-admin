@@ -8,6 +8,7 @@ import {
   PASSWORD,
   PHONE,
   SHORTSTR,
+  STATUS,
 } from "./constant.js";
 
 const validator = (schema, req, res, next) => {
@@ -45,6 +46,14 @@ export const loginValidation = (req, res, next) => {
   const schema = Joi.object({
     email: EMAIL.required(),
     password: PASSWORD.required(),
+  });
+  validator(schema, req, res, next);
+};
+export const newCategoryValidation = (req, res, next) => {
+  const schema = Joi.object({
+    satus: STATUS,
+    name: SHORTSTR.required(),
+    parentId: SHORTSTR.allow(null,"")
   });
   validator(schema, req, res, next);
 };

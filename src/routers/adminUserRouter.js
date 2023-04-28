@@ -10,7 +10,7 @@ import {
   emailVerificationValidation,
   loginValidation,
   newAdminUserValidation,
-} from "../middlewares/joivalidation/adminUserValidation.js";
+} from "../middlewares/joivalidation/joiValidation.js";
 import {
   userVerifiedNotification,
   verificationEmail,
