@@ -50,10 +50,11 @@ export const loginValidation = (req, res, next) => {
   validator(schema, req, res, next);
 };
 export const newCategoryValidation = (req, res, next) => {
+  req.body.parentId = req.body.parentId ? req.body.parentId : null;
   const schema = Joi.object({
-    satus: STATUS,
+    status: STATUS,
     name: SHORTSTR.required(),
-    parentId: SHORTSTR.allow(null,"")
+    parentId: SHORTSTR.allow(null),
   });
   validator(schema, req, res, next);
 };
