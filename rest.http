@@ -35,3 +35,8 @@ Content-Type: application/json
 "name":"ipads",
 "parentId":""
 }
+
+
+### get categories
+
+GET http://localhost:8000/api/v1/categories
