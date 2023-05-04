@@ -3,10 +3,14 @@ import slugify from "slugify";
 import {
   getAllCategories,
   getCategoryById,
+  hasChildCategoryById,
   insertCategory,
   updateCategoryById,
 } from "../models/categoriesModel/CategoriesModel.js";
-import { newCategoryValidation, updateCategoryValidation } from "../middlewares/joivalidation/joiValidation.js";
+import {
+  newCategoryValidation,
+  updateCategoryValidation,
+} from "../middlewares/joivalidation/joiValidation.js";
 const router = express.Router();
 // get categories
 router.get("/:_id?", async (req, res, next) => {
@@ -49,10 +53,17 @@ router.post("/", newCategoryValidation, async (req, res, next) => {
 });
 
 // update category
-router.put("/",  async (req, res, next) => {
+router.put("/", updateCategoryValidation, async (req, res, next) => {
   try {
-    const catUpdate= await updateCategoryById(req.body)
-    console.log(req.body);
+    const hasChildCats = await hasChildCategoryById(req.body._id);
+    if (hasChildCats) {
+      return res.json({
+        status: "error",
+        message:
+          "This category has child categories, please delete them and re-assign them to other categories.",
+      });
+    }
+    const catUpdate = await updateCategoryById(req.body);
     catUpdate?._id
       ? res.json({
           status: "success",
