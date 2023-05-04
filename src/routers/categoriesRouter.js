@@ -4,8 +4,9 @@ import {
   getAllCategories,
   getCategoryById,
   insertCategory,
+  updateCategoryById,
 } from "../models/categoriesModel/CategoriesModel.js";
-import { newCategoryValidation } from "../middlewares/joivalidation/joiValidation.js";
+import { newCategoryValidation, updateCategoryValidation } from "../middlewares/joivalidation/joiValidation.js";
 const router = express.Router();
 // get categories
 router.get("/:_id?", async (req, res, next) => {
@@ -47,5 +48,23 @@ router.post("/", newCategoryValidation, async (req, res, next) => {
   }
 });
 
+// update category
+router.put("/",  async (req, res, next) => {
+  try {
+    const catUpdate= await updateCategoryById(req.body)
+    console.log(req.body);
+    catUpdate?._id
+      ? res.json({
+          status: "success",
+          message: "the category has been updated",
+        })
+      : res.json({
+          status: "error",
+          message: "Unable to update the category, please try again later",
+        });
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;

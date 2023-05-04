@@ -11,3 +11,7 @@ export const getCategoryById = (_id) => {
 export const getAllCategories = () => {
   return categoriesSchema.find();
 };
+// update category
+export const updateCategoryById = ({ _id, ...update }) => {
+  return categoriesSchema.findByIdAndUpdate(_id, update, { new: true });
+};
