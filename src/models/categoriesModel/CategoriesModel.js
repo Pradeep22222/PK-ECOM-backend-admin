@@ -15,8 +15,13 @@ export const getAllCategories = () => {
 export const updateCategoryById = ({ _id, ...update }) => {
   return categoriesSchema.findByIdAndUpdate(_id, update, { new: true });
 };
-// update category
+// see if a category has a child category
 export const hasChildCategoryById = async (_id) => {
-  const cat = await categoriesSchema.findOne({ parentId:_id });
+  const cat = await categoriesSchema.findOne({ parentId: _id });
   return cat?._id ? true : false;
+};
+
+// delete category
+export const deleteCategoryById = async (_id) => {
+  return categoriesSchema.findByIdAndDelete(_id);
 };

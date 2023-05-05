@@ -40,3 +40,8 @@ Content-Type: application/json
 ### get categories
 
 GET http://localhost:8000/api/v1/categories
+
+
+### delete category
+
+Delete http://localhost:8000/api/v1/categories/6451c060e3e102740b4f7e99
