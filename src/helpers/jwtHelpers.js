@@ -28,3 +28,16 @@ export const createJWTs = async (payload) => {
     refreshJWT: await signRefreshJWT(payload),
   };
 };
+export const verifyAccessJWT = (token) => {
+  try {
+    return jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+  } catch ({ message }) {
+    if (message === "jwt expired") {
+      deleteSession({
+        type: "accessJWT",
+        token,
+      });
+    }
+    return message;
+  }
+};

@@ -11,7 +11,7 @@ import {
 import {
   newCategoryValidation,
   updateCategoryValidation,
-} from "../middlewares/joivalidation/joiValidation.js";
+} from "../middlewares/joi-validation/joiValidation.js";
 const router = express.Router();
 // get categories
 router.get("/:_id?", async (req, res, next) => {

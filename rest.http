@@ -41,6 +41,10 @@ Content-Type: application/json
 
 GET http://localhost:8000/api/v1/categories
 
+### get categories with authorization
+GET http://localhost:8000/api/v1/categories
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByYWRlZXBkaGl0YWwwMDFAZ21haWwuY29tIiwiaWF0IjoxNjgzNDE3NTcwLCJleHAiOjE2ODM0MTg0NzB9.M0nsg3_8bnKEMG1hKEJAUCgg4YN-zPnzy6aEX3CA_LI
+
 
 ### delete category
 

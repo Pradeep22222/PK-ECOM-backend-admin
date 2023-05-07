@@ -15,7 +15,8 @@ app.use(express.json());
 import adminUserRouter from "./src/routers/adminUserRouter.js";
 app.use("/api/v1/admin-user", adminUserRouter);
 import categoriesRouter from "./src/routers/categoriesRouter.js";
-app.use("/api/v1/categories", categoriesRouter);
+import { adminAuth } from "./src/middlewares/auth-middleware/authMiddleware.js";
+app.use("/api/v1/categories",adminAuth, categoriesRouter);
 
 app.use("/", (req, res) => {
   res.json({
