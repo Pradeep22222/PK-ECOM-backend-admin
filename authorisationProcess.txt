@@ -7,3 +7,21 @@
 4. store token in the browser storage.
   a. AccessJWT goes to the sessionStorage.
   b.refresh JWT goes in the localStorage.
+
+
+  Step 2
+  1. Receive accessJWT as a authorization header.
+  2. verify if accessJWT is valid.
+  3. verify if accessJWT exist in the session table.
+  4. then, get the user info by email which is available through jwt decode.
+  5. do next()
+  6. if an of these step fails, return unauthorization error message and return
+
+
+
+
+  Frontend auto login
+   case1:  Refreshing same window:
+
+
+   case2:  open new tab for the application or come back and re-visit the site.

@@ -16,9 +16,19 @@ import {
   verificationEmail,
 } from "../helpers/emailHelper.js";
 import { createJWTs } from "../helpers/jwtHelpers.js";
+import { adminAuth } from "../middlewares/auth-middleware/authMiddleware.js";
 const router = express.Router();
-
-router.post("/", newAdminUserValidation, async (req, res, next) => {
+router.get("/", adminAuth, (req, res, next) => {
+  try {
+    const user = req.adminInfo;
+    res.json({
+      status: "success",
+      message: "to do",
+      user,
+    });
+  } catch (error) {}
+});
+router.post("/", adminAuth, newAdminUserValidation, async (req, res, next) => {
   try {
     const { password } = req.body;
     req.body.password = hashPassword(password);
