@@ -15,7 +15,11 @@ import {
   userVerifiedNotification,
   verificationEmail,
 } from "../helpers/emailHelper.js";
-import { createJWTs } from "../helpers/jwtHelpers.js";
+import {
+  createJWTs,
+  signAccessJWT,
+  verifyRefreshJWT,
+} from "../helpers/jwtHelpers.js";
 import { adminAuth } from "../middlewares/auth-middleware/authMiddleware.js";
 const router = express.Router();
 router.get("/", adminAuth, (req, res, next) => {
@@ -133,5 +137,30 @@ router.post("/login", loginValidation, async (req, res, next) => {
     next(error);
   }
 });
-
+// generate new accessJWT and send back to the client
+router.get("/accessjwt", async (req, res, next) => {
+  try {
+    const { authorization } = req.headers;
+    if (authorization) {
+      // verify token
+      const decoded = verifyRefreshJWT(authorization);
+      if (decoded.email) {
+        // check if exist on db
+        const user = await findOneAdminUser({ email: decoded.email });
+        if (user?._id) {
+          // create new accessJWT and send  to frontend
+          const accessjwt = await signAccessJWT({ email: decoded.email });
+          return res.json({
+            status: "success",
+            accessJWT: await signAccessJWT({ email: decoded.email }),
+          });
+        }
+      }
+    }
+    res.status(401).json({ status: "error", message: "unauthenticated" });
+  } catch (error) {
+    error.status = 401;
+    next(error);
+  }
+});
 export default router;

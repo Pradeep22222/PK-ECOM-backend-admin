@@ -25,6 +25,9 @@ Content-Type: application/json
     "password":"pradeep"
 }
 #============= categories action
+### get new access JWT
+GET http://localhost:8000/api/v1/admin-user/accessjwt
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByYWRlZXBkaGl0YWwwMDFAZ21haWwuY29tIiwiaWF0IjoxNjgzNTAzMDU0LCJleHAiOjE2ODYwOTUwNTR9.kNAfRr-bG-AApKnEtCMLrN3OSonw98z1gFnVV-fZDk0
 
 ### post category
 POST http://localhost:8000/api/v1/categories
