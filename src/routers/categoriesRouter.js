@@ -56,14 +56,17 @@ router.post("/", newCategoryValidation, async (req, res, next) => {
 // update category
 router.put("/", updateCategoryValidation, async (req, res, next) => {
   try {
-    const hasChildCats = await hasChildCategoryById(req.body._id);
-    if (hasChildCats) {
-      return res.json({
-        status: "error",
-        message:
-          "This category has child categories, please delete them or re-assign them to other categories first.",
-      });
+    if (req.body.parentId) {
+      const hasChildCats = await hasChildCategoryById(req.body._id);
+      if (hasChildCats) {
+        return res.json({
+          status: "error",
+          message:
+            "This category has child categories, please delete them or re-assign them to other categories first.",
+        });
+      }
     }
+
     const catUpdate = await updateCategoryById(req.body);
     catUpdate?._id
       ? res.json({
