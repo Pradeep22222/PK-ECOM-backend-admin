@@ -16,8 +16,10 @@ import adminUserRouter from "./src/routers/adminUserRouter.js";
 app.use("/api/v1/admin-user", adminUserRouter);
 import categoriesRouter from "./src/routers/categoriesRouter.js";
 import { adminAuth } from "./src/middlewares/auth-middleware/authMiddleware.js";
-app.use("/api/v1/categories",adminAuth, categoriesRouter);
+import paymentRouter from "./src/routers/paymentMethodsRouter.js";
 
+app.use("/api/v1/categories",adminAuth, categoriesRouter);
+app.use("/api/v1/payment", adminAuth, paymentRouter);
 app.use("/", (req, res) => {
   res.json({
     message: "are you lost darling",
