@@ -152,7 +152,7 @@ router.get("/accessjwt", async (req, res, next) => {
           const accessjwt = await signAccessJWT({ email: decoded.email });
           return res.json({
             status: "success",
-            accessJWT: await signAccessJWT({ email: decoded.email }),
+            accessjwt,
           });
         }
       }

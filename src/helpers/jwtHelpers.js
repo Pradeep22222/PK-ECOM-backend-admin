@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { insertSession } from "../models/sessions/SessionModel.js";
+import { deleteSession, insertSession } from "../models/sessions/SessionModel.js";
 import { updateOneAdminUser } from "../models/adminUserModel/AdminUserModel.js";
 
 export const signAccessJWT = async (payload) => {

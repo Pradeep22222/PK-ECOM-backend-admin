@@ -9,7 +9,7 @@
   b.refresh JWT goes in the localStorage.
 
 
-  Step 2
+  Step 2:  Protect server
   1. Receive accessJWT as a authorization header.
   2. verify if accessJWT is valid.
   3. verify if accessJWT exist in the session table.
