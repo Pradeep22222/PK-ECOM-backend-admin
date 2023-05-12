@@ -69,3 +69,13 @@ export const updateCategoryValidation = (req, res, next) => {
   });
   validator(schema, req, res, next);
 };
+
+// =========== Payment methods
+export const newPaymentMethodValidation = (req, res, next) => {
+  const schema = Joi.object({
+    status: STATUS,
+    name: SHORTSTR.required(),
+    description: LONGSTR.required(),
+  });
+  validator(schema, req, res, next);
+};

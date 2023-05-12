@@ -1,4 +1,5 @@
 import express from "express";
+import { newPaymentMethodValidation } from "../middlewares/joi-validation/joiValidation.js";
 const router = express.Router();
 router.get("/", (req, res, next) => {
   try {
@@ -11,11 +12,11 @@ router.get("/", (req, res, next) => {
     next(error);
   }
 });
-router.post("/", (req, res, next) => {
+router.post("/",newPaymentMethodValidation, (req, res, next) => {
   try {
     res.json({
       status: "success",
-      message: "to do get",
+      message: "to do post",
     });
   } catch (error) {
     error.status = 500;

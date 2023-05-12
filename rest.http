@@ -52,3 +52,16 @@ Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByYWRlZXBkaGl0Y
 ### delete category
 
 Delete http://localhost:8000/api/v1/categories/6451c060e3e102740b4f7e99
+
+
+#==========payment methods
+### Get method
+GET http://localhost:8000/api/v1/payment
+
+### Post method
+Post http://localhost:8000/api/v1/payment
+
+{"status":"inactive",
+    "name":"pay by credit card",
+    "description":"Follow the instruction to pay by the credit card"
+}
